@@ -1,0 +1,109 @@
+:root {
+	/* Update values here! */
+	--body-bg: #000000;
+	--box-bg: var(--body-bg);
+	--risograph-hue: 0;
+	--risograph-grayscale: 0;
+	--risograph-color: #ffffff;
+	--risograph-comp: #000000;
+	--risograph-angle: 45deg;
+	--demo-size: min(75vmin, 400px);
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	min-height: 100vh;
+
+	color: #ffffff;
+	background: linear-gradient(
+		calc(var(--risograph-angle) + 180deg),
+		hsl(var(--risograph-hue), calc((1 - var(--risograph-grayscale)) * 50%), 16%),
+		hsl(var(--risograph-hue), calc((1 - var(--risograph-grayscale)) * 25%), 8%)
+	);
+}
+
+.risograph {
+	/* Works best with a square */
+	width: var(--demo-size, 200px);
+	height: var(--demo-size, 200px);
+
+	border-radius: 50%;
+	background: var(--risograph-comp, #000000)
+		linear-gradient(
+			var(--risograph-angle, 0deg),
+			var(--risograph-color, hotpink) 2.5%,
+			20%,
+			transparent 50%
+		)
+		no-repeat 50% 50% / 100% 100%;
+}
+
+p {
+	padding: 2em;
+
+	text-align: center;
+}
+
+button {
+	--button-color-light: 96%;
+	--button-shadow-color: hsla(
+		var(--risograph-hue),
+		calc((1 - var(--risograph-grayscale)) * 36%),
+		56%,
+		0.36
+	);
+	--button-y: 0; // Offset factor
+	--button-growth: calc(
+		(2 - var(--button-y)) * (2 - var(--button-y))
+	); // 1x1 or 2x2
+
+	padding: 0.5em 1em;
+
+	font-family: Helvetica, Roboto, system-ui, sans-serif;
+	font-size: 1.25rem;
+	line-height: 1;
+	color: hsl(
+		var(--risograph-hue, 0deg),
+		calc((1 - var(--risograph-grayscale)) * 100%),
+		var(--button-color-light, 95%)
+	);
+	background: hsl(
+		var(--risograph-hue),
+		calc((1 - var(--risograph-grayscale)) * 80%),
+		5%
+	);
+	border: 0;
+	border-radius: 0.5em;
+	box-shadow: 0px 0 0.25em calc(0.25em * (1 - var(--button-y, 1)))
+			var(--button-shadow-color),
+		/* Leverages https://www.joshwcomeau.com/shadow-palette/ */ 0px
+			calc(0.5px * var(--button-y, 1)) calc(0.6px * var(--button-growth))
+			var(--button-shadow-color),
+		0px calc(1.6px * var(--button-y, 1)) calc(1.8px * var(--button-growth))
+			calc(-0.8px / (var(--button-growth) / 2)) var(--button-shadow-color),
+		0px calc(4px * var(--button-y, 1)) calc(4.5px * var(--button-growth))
+			calc(-1.7px / (var(--button-growth) / 2)) var(--button-shadow-color),
+		0px calc(9.8px * var(--button-y, 1)) calc(011px * var(--button-growth))
+			calc(-2.5px / (var(--button-growth) / 2)) var(--button-shadow-color);
+
+	transition: all 200ms ease-in-out;
+	transition-property: color, box-shadow;
+
+	cursor: pointer;
+
+	&:hover {
+		--button-y: 1;
+		--button-color-light: 88%;
+	}
+
+	&:focus {
+		outline: 2px dotted hsl(var(--risograph-hue), 42%, 67%);
+	}
+
+	&:focus:not(:focus-visible) {
+		outline: none;
+	}
+}
